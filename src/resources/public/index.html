@@ -1,11 +1,373 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/css/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <script src="/public/js/appBACUS.js" defer></script>
     <title>BACUS</title>
 </head>
+
 <body>
-    
+    <header>
+        <form id="specific_search">
+            <select name="parameter">
+                <option value="general_use">Uso general</option>
+                <option value="specific_use">Uso especifico</option>
+                <option value="activity_businessLine">Actividad o Giros</option>
+                <option value="magnitude">Magnitud</option>
+            </select>
+            <input name="value" type="text">
+
+            <button class="bi-search" type="submit"> Buscar</button>
+        </form>
+        <form id="text_search">
+            <input name="search" type="text">
+
+            <button class="bi-search" type="submit"> Buscar</button>
+        </form>
+        <div class="symbols">
+            <p><span class="symbol allowed bi-square-fill"></span> Permitido</p>
+            <p><span class="symbol conditioned bi-square-fill"></span> Condicionado</p>
+            <p><span class="symbol forbidden bi-square-fill"></span> No permitido</p>
+            <p><span class="symbol not-aplicable bi-square-fill"></span> No aplica</p>
+        </div>
+    </header>
+    <main>
+        <table>
+            <thead>
+                <th>Uso General</th>
+                <th>Uso Especifico</th>
+                <th>Actividad o Giros</th>
+                <th>Magnitud</th>
+                <th><span class="tooltip">H0.5
+                        <span class="tooltip-text">Densidad muy baja (Unifamiliar)</span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('H0_5', 'P')"></span>
+                        <span class="square conditioned" onclick="search('H0_5', 'O')"></span>
+                        <span class="square forbidden" onclick="search('H0_5', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('H0_5', 'NA')"></span>
+                    </div>
+                </th>
+                <th><span class="tooltip">H1
+                        <span class="tooltip-text">Densidad baja (Unifamiliar)</span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('H1', 'P')"></span>
+                        <span class="square conditioned" onclick="search('H1', 'O')"></span>
+                        <span class="square forbidden" onclick="search('H1', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('H1', 'NA')"></span>
+                    </div>
+                </th>
+                <th><span class="tooltip">H1.5
+                        <span class="tooltip-text">Densidad media baja (Unifamiliar)</span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('H1_5', 'P')"></span>
+                        <span class="square conditioned" onclick="search('H1_5', 'O')"></span>
+                        <span class="square forbidden" onclick="search('H1_5', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('H1_5', 'NA')"></span>
+                    </div>
+                </th>
+                <th><span class="tooltip">H2
+                        <span class="tooltip-text">Densidad media (Unifamiliar)</span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('H2', 'P')"></span>
+                        <span class="square conditioned" onclick="search('H2', 'O')"></span>
+                        <span class="square forbidden" onclick="search('H2', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('H2', 'NA')"></span>
+                    </div>
+                </th>
+                <th><span class="tooltip">H2.5
+                        <span class="tooltip-text">Densidad media alta (Unifamiliar)</span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('H2_5', 'P')"></span>
+                        <span class="square conditioned" onclick="search('H2_5', 'O')"></span>
+                        <span class="square forbidden" onclick="search('H2_5', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('H2_5', 'NA')"></span>
+                    </div>
+                </th>
+                <th><span class="tooltip">H3
+                        <span class="tooltip-text">Densidad alta (Unifamiliar)</span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('H3', 'P')"></span>
+                        <span class="square conditioned" onclick="search('H3', 'O')"></span>
+                        <span class="square forbidden" onclick="search('H3', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('H3', 'NA')"></span>
+                    </div>
+                </th>
+                <th><span class="tooltip">H3.5
+                        <span class="tooltip-text">Densidad alta (multifamiliar dúplex, tríplex y cuádruplex)</span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('H3_5', 'P')"></span>
+                        <span class="square conditioned" onclick="search('H3_5', 'O')"></span>
+                        <span class="square forbidden" onclick="search('H3_5', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('H3_5', 'NA')"></span>
+                    </div>
+                </th>
+                <th><span class="tooltip">H4
+                        <span class="tooltip-text">Densidad muy alta 1 (multifamiliar)</span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('H4', 'P')"></span>
+                        <span class="square conditioned" onclick="search('H4', 'O')"></span>
+                        <span class="square forbidden" onclick="search('H4', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('H4', 'NA')"></span>
+                    </div>
+                </th>
+                <th><span class="tooltip">H5
+                        <span class="tooltip-text">Densidad muy alta 2</span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('H5', 'P')"></span>
+                        <span class="square conditioned" onclick="search('H5', 'O')"></span>
+                        <span class="square forbidden" onclick="search('H5', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('H5', 'NA')"></span>
+                    </div>
+                </th>
+                <th><span class="tooltip">MI
+                        <span class="tooltip-text">Mixto</span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('MI', 'P')"></span>
+                        <span class="square conditioned" onclick="search('MI', 'O')"></span>
+                        <span class="square forbidden" onclick="search('MI', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('MI', 'NA')"></span>
+                    </div>
+                </th>
+                <th><span class="tooltip">CUMB
+                        <span class="tooltip-text">Corredor urbano mixto de baja densidad</span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('CUMB', 'P')"></span>
+                        <span class="square conditioned" onclick="search('CUMB', 'O')"></span>
+                        <span class="square forbidden" onclick="search('CUMB', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('CUMB', 'NA')"></span>
+                    </div>
+                </th>
+                <th><span class="tooltip">CUMM 
+                        <span class="tooltip-text">Corredor urbano mixto de media densidad</span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('CUMM', 'P')"></span>
+                        <span class="square conditioned" onclick="search('CUMM', 'O')"></span>
+                        <span class="square forbidden" onclick="search('CUMM', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('CUMM', 'NA')"></span>
+                    </div>
+                </th>
+                <th><span class="tooltip">IB 
+                        <span class="tooltip-text">Industria de bajo impacto</span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('IB', 'P')"></span>
+                        <span class="square conditioned" onclick="search('IB', 'O')"></span>
+                        <span class="square forbidden" onclick="search('IB', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('IB', 'NA')"></span>
+                    </div>
+                </th>
+                <th><span class="tooltip">IM 
+                        <span class="tooltip-text">Industria de medio impacto</span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('IM', 'P')"></span>
+                        <span class="square conditioned" onclick="search('IM', 'O')"></span>
+                        <span class="square forbidden" onclick="search('IM', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('IM', 'NA')"></span>
+                    </div>
+                </th>
+                <th><span class="tooltip">IG 
+                        <span class="tooltip-text">Industria de gran impacto</span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('IG', 'P')"></span>
+                        <span class="square conditioned" onclick="search('IG', 'O')"></span>
+                        <span class="square forbidden" onclick="search('IG', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('IG', 'NA')"></span>
+                    </div>
+                </th>
+                <th><span class="tooltip">EU 
+                        <span class="tooltip-text">Equipamiento Urbano</span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('EU', 'P')"></span>
+                        <span class="square conditioned" onclick="search('EU', 'O')"></span>
+                        <span class="square forbidden" onclick="search('EU', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('EU', 'NA')"></span>
+                    </div>
+                </th>
+                <th><span class="tooltip">IU 
+                        <span class="tooltip-text">Infraestructura urbana</span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('IU', 'P')"></span>
+                        <span class="square conditioned" onclick="search('IU', 'O')"></span>
+                        <span class="square forbidden" onclick="search('IU', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('IU', 'NA')"></span>
+                    </div>
+                </th>
+                <th><span class="tooltip">RT 
+                        <span class="tooltip-text">Reserva territorial futura</span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('RT', 'P')"></span>
+                        <span class="square conditioned" onclick="search('RT', 'O')"></span>
+                        <span class="square forbidden" onclick="search('RT', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('RT', 'NA')"></span>
+                    </div>
+                </th>
+                <th><span class="tooltip">AT 
+                        <span class="tooltip-text">Agricultura tecnificada</span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('AT', 'P')"></span>
+                        <span class="square conditioned" onclick="search('AT', 'O')"></span>
+                        <span class="square forbidden" onclick="search('AT', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('AT', 'NA')"></span>
+                    </div>
+                </th>
+                <th><span class="tooltip">AI 
+                        <span class="tooltip-text">Agroindustria</span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('AI', 'P')"></span>
+                        <span class="square conditioned" onclick="search('AI', 'O')"></span>
+                        <span class="square forbidden" onclick="search('AI', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('AI', 'NA')"></span>
+                    </div>
+                </th>
+                <th><span class="tooltip">CA 
+                        <span class="tooltip-text">Cuerpos de agua</span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('CA', 'P')"></span>
+                        <span class="square conditioned" onclick="search('CA', 'O')"></span>
+                        <span class="square forbidden" onclick="search('CA', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('CA', 'NA')"></span>
+                    </div>
+                </th>
+                <th><span class="tooltip">CRA 
+                        <span class="tooltip-text">Conservación y restauración ambiental 1</span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('CRA', 'P')"></span>
+                        <span class="square conditioned" onclick="search('CRA', 'O')"></span>
+                        <span class="square forbidden" onclick="search('CRA', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('CRA', 'NA')"></span>
+                    </div>
+                </th>
+                <th><span class="tooltip">PH 
+                        <span class="tooltip-text">Parque Hídrico</span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('PH', 'P')"></span>
+                        <span class="square conditioned" onclick="search('PH', 'O')"></span>
+                        <span class="square forbidden" onclick="search('PH', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('PH', 'NA')"></span>
+                    </div>
+                </th>
+                <th><span class="tooltip">VMR 
+                        <span class="tooltip-text">Ancho de vialidad mínima requerida para los usos señalados</span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('VMR', 'P')"></span>
+                        <span class="square conditioned" onclick="search('VMR', 'O')"></span>
+                        <span class="square forbidden" onclick="search('VMR', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('VMR', 'NA')"></span>
+                    </div>
+                </th>
+                <th><span class="tooltip">AIU 
+                        <span class="tooltip-text">Análisis de imagen urbana emitido por IMDUyV</span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('AIU', 'P')"></span>
+                        <span class="square conditioned" onclick="search('AIU', 'O')"></span>
+                        <span class="square forbidden" onclick="search('AIU', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('AIU', 'NA')"></span>
+                    </div>
+                </th>
+                <th><span class="tooltip">EIU 
+                        <span class="tooltip-text">Estudio de impacto urbano</span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('EIU', 'P')"></span>
+                        <span class="square conditioned" onclick="search('EIU', 'O')"></span>
+                        <span class="square forbidden" onclick="search('EIU', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('EIU', 'NA')"></span>
+                    </div>
+                </th>
+                <th><span class="tooltip">AIV 
+                        <span class="tooltip-text">Análisis de impacto vial</span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('AIV', 'P')"></span>
+                        <span class="square conditioned" onclick="search('AIV', 'O')"></span>
+                        <span class="square forbidden" onclick="search('AIV', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('AIV', 'NA')"></span>
+                    </div>
+                </th>
+                <th><span class="tooltip">EIA 
+                        <span class="tooltip-text">Estudio de impacto ambiental (Con dictamen)</span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('EIA', 'P')"></span>
+                        <span class="square conditioned" onclick="search('EIA', 'O')"></span>
+                        <span class="square forbidden" onclick="search('EIA', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('EIA', 'NA')"></span>
+                    </div>
+                </th>
+                <th><span class="tooltip">EIS 
+                        <span class="tooltip-text">Estudio de impacto social</span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('EIS', 'P')"></span>
+                        <span class="square conditioned" onclick="search('EIS', 'O')"></span>
+                        <span class="square forbidden" onclick="search('EIS', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('EIS', 'NA')"></span>
+                    </div>
+                </th>
+                <th><span class="tooltip">PP 
+                        <span class="tooltip-text">Elaboración de Programa Parcial</span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('PP', 'P')"></span>
+                        <span class="square conditioned" onclick="search('PP', 'O')"></span>
+                        <span class="square forbidden" onclick="search('PP', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('PP', 'NA')"></span>
+                    </div>
+                </th>
+                <th><span class="tooltip">DAP 
+                        <span class="tooltip-text">Dictamen autorización aeroportuario para edificios de gran altura</span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('DAP', 'P')"></span>
+                        <span class="square conditioned" onclick="search('DAP', 'O')"></span>
+                        <span class="square forbidden" onclick="search('DAP', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('DAP', 'NA')"></span>
+                    </div>
+                </th>
+                <th><span class="tooltip">PRC 
+                        <span class="tooltip-text">Estudio y dictamen de protección civil </span>
+                    </span> <br>
+                    <div class="squares">
+                        <span class="square allowed" onclick="search('PRC', 'P')"></span>
+                        <span class="square conditioned" onclick="search('PRC', 'O')"></span>
+                        <span class="square forbidden" onclick="search('PRC', 'X')"></span>
+                        <span class="square not-aplicable" onclick="search('PRC', 'NA')"></span>
+                    </div>
+                </th>
+            </thead>
+            <tbody id="results">
+            </tbody>
+        </table>
+    </main>
 </body>
+
 </html>

@@ -17,9 +17,9 @@ export async function requestSearch(parameter, value) {
         return {
             status: 404,
             data: {
-                msg: `No matching results, for ${value} in ${parameter}.`
+                msg: `No matching results, for "${value}" in ${parameter}.`
             },
-            log: `No matching results, for ${value} in ${parameter}`
+            log: `No matching results, for "${value}" in ${parameter}`
         };
     }
 
@@ -28,6 +28,38 @@ export async function requestSearch(parameter, value) {
         data: {
             results: SEARCH
         },
-        log: `Search for ${value} in ${parameter} request successful`
+        log: `Search for "${value}" in ${parameter} request successful`
+    };
+}
+
+export async function requestTextSearch(value) {
+    if (!value) {
+        return {
+            status: 400,
+            data: {
+                msg: "Missing information for search."
+            },
+            log: 'Missing information for search'
+        };
+    }
+
+    const SEARCH = await bacusRepo.findByTextSearch(value);
+
+    if (SEARCH == null || SEARCH.length == 0) {
+        return {
+            status: 404,
+            data: {
+                msg: `No matching results, for "${value}".`
+            },
+            log: `No matching results, for "${value}"`
+        };
+    }
+
+    return {
+        status: 400,
+        data: {
+            results: SEARCH
+        },
+        log: `Search for "${value}" request successful`
     };
 }

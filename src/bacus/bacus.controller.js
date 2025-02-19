@@ -14,3 +14,17 @@ export const search = async (req, res) => {
         console.error(error);
     }
 }
+
+export const searchText = async (req, res) => {
+    try {
+        const VALUE = req.params.value;
+        const response = await bacusService.requestTextSearch(VALUE);
+
+        res.status(response.status).json(response.data);
+
+        console.log(response.log)
+    } catch (error) {
+        res.status(500).json({msg: "Internal server error"});
+        console.error(error);
+    }
+}

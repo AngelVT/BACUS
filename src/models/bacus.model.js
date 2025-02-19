@@ -4,19 +4,19 @@ import { pool } from "../configuration/database.config.js";
 export const BACUS = pool.define(
     'table_bacus', {
     general_use: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false
     },
     specific_use: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false
     },
     activity_businessLine: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false
     },
     magnitude: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false
     },
     H0_5: {
