@@ -2,6 +2,7 @@
     --primary: #832339;
     --allowed: #7AC142;
     --conditioned: #F4C542;
+    --conditional: #E98B4A;
     --forbidden: #D64550;
     --not-aplicable: #6C9FA3;
     --neutral: #A0A0A0;
@@ -81,9 +82,6 @@ table {
     width: 100%;
     border-collapse:collapse;
     border-spacing:0;
-    border-color:black;
-    border-style:solid;
-    border-width:1px;
     word-break:normal;
     font-size: 12px;
 }
@@ -96,14 +94,13 @@ thead {
 th {
     background-color: var(--black);
     color: var(--white);
-    padding: 15px 0 0 0;
+    padding: 19px 0 19px 0;
 }
 
-th, td {
+td {
+    border: 1px solid var(--black);
     word-break:normal;
-    border-color:black;
-    border-style:solid;
-    border-width:1px;
+    padding: 5px 2px;
 }
 
 tr {
@@ -142,6 +139,10 @@ th:nth-child(1), td:nth-child(1), th:nth-child(2), td:nth-child(2), th:nth-child
     background-color: var(--conditioned);
 }
 
+.result.conditional {
+    background-color: var(--conditional);
+}
+
 .result.forbidden {
     background-color: var(--forbidden);
 }
@@ -163,7 +164,7 @@ th:nth-child(1), td:nth-child(1), th:nth-child(2), td:nth-child(2), th:nth-child
     cursor: pointer;
     display: inline-block;
     height: 10px;
-    width: 6px;
+    width: 7px;
     transition: width ease-in-out 0.2s;
 }
 
@@ -177,6 +178,10 @@ th:nth-child(1), td:nth-child(1), th:nth-child(2), td:nth-child(2), th:nth-child
 
 .square.conditioned {
     background-color: var(--conditioned);
+}
+
+.square.conditional {
+    background-color: var(--conditional);
 }
 
 .square.forbidden {
@@ -194,6 +199,7 @@ th:nth-child(1), td:nth-child(1), th:nth-child(2), td:nth-child(2), th:nth-child
 .symbols {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    column-gap: 5px;
 
     background-color: var(--white);
     border: 1px solid var(--primary);
@@ -207,6 +213,10 @@ th:nth-child(1), td:nth-child(1), th:nth-child(2), td:nth-child(2), th:nth-child
 
 .symbol.conditioned {
     color: var(--conditioned);
+}
+
+.symbol.conditional {
+    color: var(--conditional);
 }
 
 .symbol.forbidden {
@@ -235,7 +245,7 @@ th:nth-child(1), td:nth-child(1), th:nth-child(2), td:nth-child(2), th:nth-child
     visibility: hidden;
     text-align: center;
     position: absolute;
-    top: 0; 
+    top: -2px; 
     left: 60%;
     transform: translateX(-50%);
     white-space: nowrap;
@@ -252,4 +262,46 @@ th:nth-child(1), td:nth-child(1), th:nth-child(2), td:nth-child(2), th:nth-child
 .highlight {
     background-color: yellow;
     font-weight: bold;
+}
+
+.desplegable {
+    position: relative;
+    background-color: var(--neutral);
+    color: var(--white);
+    cursor: pointer;
+}
+
+.desplegable-options {
+    display: flex;
+
+    visibility: hidden;
+    position: absolute;
+    top: 100%; 
+    left: 60%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    z-index: 1;
+    opacity: 0%;
+    transition: ease-in-out .2s;
+}
+
+.desplegable:hover .desplegable-options {
+    visibility: visible;
+    opacity: 100%;
+}
+
+.desplegable-options .square.neutral {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--white);
+    text-align: center;
+    padding: 10px 0;
+    height: 12px;
+    width: 20px;
+}
+
+.desplegable-options .square:hover {
+    width: 25px;
+    background-color: var(--primary);
 }

@@ -79,6 +79,12 @@ async function searchText(value) {
                 continue;
             }
 
+            if (result[key] == "C") {
+                cell.setAttribute('class', 'result conditional');
+                row.appendChild(cell);
+                continue;
+            }
+
             if (result[key].length > 2) {
                 cell.setAttribute('class', 'result regular');
                 row.appendChild(cell);
@@ -149,6 +155,12 @@ async function search(parameter, value) {
 
             if (result[key] == "NA") {
                 cell.setAttribute('class', 'result not-aplicable');
+                row.appendChild(cell);
+                continue;
+            }
+
+            if (result[key] == "C") {
+                cell.setAttribute('class', 'result conditional');
                 row.appendChild(cell);
                 continue;
             }
