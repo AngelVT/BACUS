@@ -38,12 +38,11 @@ async function searchText(value) {
         let row = document.createElement('tr');
         for (const key in result) {
             let cell = document.createElement('td');
-            if(key == 'general_use' ||
+            let text = result[key];
+            if (key == 'general_use' ||
                 key == 'specific_use' ||
                 key == 'activity_businessLine' ||
-                key == 'activity_businessLine'
-            ) {
-                let text = result[key];
+                key == 'magnitude') {
                 let normalizedText = normalizeText(text);
                 if (normalizedText.includes(normalizedValue) && value.trim() !== "") {
                     const regex = new RegExp(value, "gi");
@@ -51,8 +50,8 @@ async function searchText(value) {
                 } else {
                     cell.innerText = text;
                 }
-            } else { 
-                cell.innerText = result[key];
+            } else {
+                cell.innerText = text;
             }
 
             if (result[key] == "P") {
@@ -90,7 +89,7 @@ async function searchText(value) {
                 row.appendChild(cell);
                 continue;
             }
-            
+
             cell.setAttribute('class', 'result neutral');
             row.appendChild(cell);
         }
@@ -115,15 +114,12 @@ async function search(parameter, value) {
         let row = document.createElement('tr');
         for (const key in result) {
             let cell = document.createElement('td');
-            if(
-                key == parameter && 
+            let text = result[key];
+            if (key == parameter &&
                 (parameter == 'general_use' ||
                     parameter == 'specific_use' ||
                     parameter == 'activity_businessLine' ||
-                    parameter == 'activity_businessLine')
-                ) 
-            {
-                let text = result[key];
+                    parameter == 'magnitude')) {
                 let normalizedText = normalizeText(text);
                 if (normalizedText.includes(normalizedValue) && value.trim() !== "") {
                     const regex = new RegExp(value, "gi");
@@ -131,8 +127,8 @@ async function search(parameter, value) {
                 } else {
                     cell.innerText = text;
                 }
-            } else { 
-                cell.innerText = result[key];
+            } else {
+                cell.innerText = text;
             }
 
             if (result[key] == "P") {

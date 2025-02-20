@@ -20,7 +20,8 @@ export async function findByTextSearch(value) {
             [Op.or]: [
                 {general_use: { [Op.like]: `%${value}%` }},
                 {specific_use: { [Op.like]: `%${value}%` }},
-                {activity_businessLine: { [Op.like]: `%${value}%` }}
+                {activity_businessLine: { [Op.like]: `%${value}%` }},
+                {magnitude: { [Op.like]: `%${value}%` }}
             ]
         },
         attributes: {
