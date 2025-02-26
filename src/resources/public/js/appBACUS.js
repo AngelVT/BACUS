@@ -44,9 +44,8 @@ async function searchText(value) {
                 key == 'activity_businessLine' ||
                 key == 'magnitude') {
                 let normalizedText = normalizeText(text);
-                if (normalizedText.includes(normalizedValue) && value.trim() !== "") {
-                    const regex = new RegExp(value, "gi");
-                    cell.innerHTML = text.replace(regex, match => `<span class="highlight">${match}</span>`);
+                if (normalizedText.includes(normalizedValue) && normalizedValue.trim() !== "") {
+                    cell.innerHTML = highlightText(normalizedText, text, normalizedValue);
                 } else {
                     cell.innerText = text;
                 }
@@ -121,9 +120,8 @@ async function search(parameter, value) {
                     parameter == 'activity_businessLine' ||
                     parameter == 'magnitude')) {
                 let normalizedText = normalizeText(text);
-                if (normalizedText.includes(normalizedValue) && value.trim() !== "") {
-                    const regex = new RegExp(value, "gi");
-                    cell.innerHTML = text.replace(regex, match => `<span class="highlight">${match}</span>`);
+                if (normalizedText.includes(normalizedValue) && normalizedValue.trim() !== "") {
+                    cell.innerHTML = highlightText(normalizedText, text, normalizedValue);
                 } else {
                     cell.innerText = text;
                 }
@@ -175,5 +173,23 @@ async function search(parameter, value) {
 }
 
 function normalizeText(text) {
-    return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    return text
+        .replace(/ñ/g, "-")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/-/g, "ñ")
+        .toLowerCase();
+}
+
+function highlightText(normalized, original, searched) {
+    const start = normalized.indexOf(searched);
+
+    if (start === -1) return original;
+
+    const end = start + searched.length;
+
+    let highlight = original.slice(start, end);
+
+    original = original.replaceAll(highlight, `<span class="highlight">${highlight}</span>`)
+    return original;
 }
