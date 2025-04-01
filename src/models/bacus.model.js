@@ -149,3 +149,5 @@ export const BACUS = pool.define(
     },
 }
 );
+
+BACUS.sync();
