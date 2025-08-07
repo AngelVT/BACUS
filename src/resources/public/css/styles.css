@@ -30,7 +30,6 @@ body {
 }
 
 header {
-    height: 12dvh;
     display: flex;
     gap: 15px;
     padding: 10px;
