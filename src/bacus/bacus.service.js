@@ -1,4 +1,5 @@
 import * as bacusRepo from './bacus.repo.js';
+import { generateBacusReportDefinition } from './PDF-definitions/bacus.report.js';
 
 export async function requestSearch(parameter, value) {
     if (!parameter || !value) {
@@ -24,7 +25,7 @@ export async function requestSearch(parameter, value) {
     }
 
     return {
-        status: 400,
+        status: 200,
         data: {
             results: SEARCH
         },
@@ -56,10 +57,34 @@ export async function requestTextSearch(value) {
     }
 
     return {
-        status: 400,
+        status: 200,
         data: {
             results: SEARCH
         },
         log: `Search for "${value}" request successful`
+    };
+}
+
+export async function requestPDF(key) {
+    if (!key) {
+        return {
+            status: 400,
+            data: {
+                msg: "Missing information for PDF report."
+            },
+            log: 'Missing information for search PDF report'
+        };
+    }
+
+    const underscoredKey = key.replaceAll('.', '_');
+
+    const [permitted, conditioned] = await bacusRepo.findKeyBusinessLines(underscoredKey);
+
+    const pdfDefinition = generateBacusReportDefinition(permitted, conditioned, underscoredKey)
+
+    return {
+        status: 200,
+        definition: pdfDefinition,
+        log: `Search for "${key}" PDF report request successful`
     };
 }

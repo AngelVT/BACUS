@@ -55,3 +55,26 @@ export async function findByTextSearch(value) {
         nest: true
     });
 }
+
+export async function findKeyBusinessLines(key) {
+    const whereClauseP = {};
+    const whereClauseO = {};
+
+    whereClauseP[key] = 'P';
+    
+    const permitted = await BACUS.findAll({
+        where: whereClauseP,
+        attributes: [key, 'activity_businessLine'],
+        raw: true
+    });
+
+    whereClauseO[key] = 'O';
+
+    const conditioned = await BACUS.findAll({
+        where: whereClauseO,
+        attributes: [key, 'activity_businessLine'],
+        raw: true
+    });
+
+    return [permitted, conditioned];
+}
