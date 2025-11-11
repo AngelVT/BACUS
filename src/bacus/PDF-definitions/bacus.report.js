@@ -2,8 +2,35 @@ import * as docUtils from '../../utils/document.utilities.js';
 import { __dirname } from '../../path.configuration.js';
 import path from 'path';
 
+const zones = {
+    "H0.5":"Densidad muy baja (Unifamiliar)",
+    "H1":"Densidad baja (Unifamiliar)",
+    "H1.5":"Densidad media baja (Unifamiliar)",	
+    "H2":"Densidad media (Unifamiliar)",
+    "H2.5":"Densidad media alta (Unifamiliar)",
+    "H3":"Densidad alta (Unifamiliar)",
+    "H3.5":"Densidad alta (multifamiliar dúplex, tríplex y cuádruplex)",
+    "H4":"Densidad muy alta 1 (multifamiliar)",
+    "H5":"Densidad muy alta 2",
+    "MI":"Mixto",
+    "CUMB":"Corredor urbano mixto de baja densidad",
+    "CUMM":"Corredor urbano mixto de media densidad",
+    "IB":"Industria de bajo impacto",
+    "IM":"Industria de medio impacto",
+    "IG":"Industria de gran impacto",
+    "EU":"Equipamiento Urbano",
+    "IU":"Infraestructura urbana",
+    "RT":"Reserva territorial futura",
+    "AT":"Agricultura tecnificada",
+    "AI":"Agroindustria",
+    "CA":"Cuerpos de agua",
+    "CRA":"Conservación y restauración ambiental",
+    "PH":"Parque Hídrico"
+}
+
 export function generateBacusReportDefinition(permitted, conditioned, key) {
     const body = [];
+    const useKey = key.replaceAll('_', '.');
 
     if (permitted.length > 0) {
         body.push([
@@ -51,6 +78,15 @@ export function generateBacusReportDefinition(permitted, conditioned, key) {
     const definition = {
         styles: docUtils.docStyles,
         pageMargins: [50, 100, 50, 100],
+        watermark: { 
+            text: 'Informativo',
+            color: 'red',
+            opacity: 0.2,
+            fontSize: 120,
+            bold: true,
+            italics: false,
+            angle: 60
+        },
         header: {
             image: path.join(__dirname, 'resources', 'public', 'img', 'membrete_header.png'),
             alignment: 'center',
@@ -59,7 +95,7 @@ export function generateBacusReportDefinition(permitted, conditioned, key) {
         },
         content: [
             {
-                text: `Actividades y giros posibles para uso de suelo ${key.replaceAll('_', '.')}`,
+                text: `Actividades y giros posibles para uso de suelo ${zones[useKey]} (${useKey})`,
                 style: 'boldCenter',
                 margin: [0, 0, 0, 20],
                 fontSize: 15
