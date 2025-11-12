@@ -29,11 +29,12 @@ const zones = {
 }
 
 export function generateBacusReportDefinition(permitted, conditioned, key) {
-    const body = [];
+    const bodyP = [];
+    const bodyC = [];
     const useKey = key.replaceAll('_', '.');
 
     if (permitted.length > 0) {
-        body.push([
+        bodyP.push([
             {
                 text: 'Actividades y giros permitidos',
                 border: docUtils.borderless,
@@ -43,7 +44,7 @@ export function generateBacusReportDefinition(permitted, conditioned, key) {
         ]);
 
         for (const p of permitted) {
-            body.push([
+            bodyP.push([
                 {
                     text: p.activity_businessLine,
                     fontSize: 8,
@@ -54,9 +55,8 @@ export function generateBacusReportDefinition(permitted, conditioned, key) {
     }
 
     if (conditioned.length > 0) {
-        body.push([
+        bodyC.push([
             {
-                pageBreak: permitted.length > 0 ? 'before' : undefined,
                 text: 'Actividades y giros condicionados',
                 border: docUtils.borderless,
                 style: 'headT',
@@ -65,7 +65,7 @@ export function generateBacusReportDefinition(permitted, conditioned, key) {
         ]);
 
         for (const c of conditioned) {
-            body.push([
+            bodyC.push([
                 {
                     text: c.activity_businessLine,
                     fontSize: 8,
@@ -102,8 +102,19 @@ export function generateBacusReportDefinition(permitted, conditioned, key) {
             },
             {
                 table: {
+                    headerRows: 1,
+                    dontBreakRows: true,
                     widths: ['*'],
-                    body: body
+                    body: bodyP
+                }
+            },
+            {
+                pageBreak: permitted.length > 0 ? 'before' : undefined,
+                table: {
+                    headerRows: 1,
+                    dontBreakRows: true,
+                    widths: ['*'],
+                    body: bodyC
                 }
             }
         ],
