@@ -100,7 +100,7 @@ export function generateBacusReportDefinition(permitted, conditioned, key) {
                 margin: [0, 0, 0, 20],
                 fontSize: 15
             },
-            {
+            bodyP.length === 0 ? undefined : {
                 table: {
                     headerRows: 1,
                     dontBreakRows: true,
@@ -108,7 +108,7 @@ export function generateBacusReportDefinition(permitted, conditioned, key) {
                     body: bodyP
                 }
             },
-            {
+            bodyC.length === 0 ? undefined : {
                 pageBreak: permitted.length > 0 ? 'before' : undefined,
                 table: {
                     headerRows: 1,
